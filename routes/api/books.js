@@ -13,6 +13,14 @@ router.get("/", (req, res) => {
     .catch((err) => res.status(404).json({ msg: "no books found" }));
 });
 
+// @route GET /api/books/{id}
+// @desc Get book by id (public)
+router.get("/:id", (req, res) => {
+  Book.findById({ _id: req.params.id })
+    .then((info) => res.json(info))
+    .catch((err) => res.status(404).json({ msg: "no book found" }));
+});
+
 // @route POST /api/books
 // @desc Create new book (public)
 router.post("/", (req, res) => {
