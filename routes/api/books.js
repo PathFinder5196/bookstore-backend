@@ -3,11 +3,13 @@ const router = express.Router();
 
 const Book = require("../../models/Book");
 
+const withAuth = require("../../middleware");
+
 router.get("/test", (req, res) => res.json({ msg: "backend works" }));
 
 // @route GET /api/books
 // @desc Get books (public)
-router.get("/", (req, res) => {
+router.get("/", withAuth, (req, res) => {
   Book.find()
     .then((info) => res.json(info))
     .catch((err) => res.status(404).json({ msg: "no books found" }));
