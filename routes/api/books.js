@@ -24,10 +24,23 @@ router.get("/:id", (req, res) => {
 // @route POST /api/books
 // @desc Create new book (public)
 router.post("/", (req, res) => {
+  const {
+    title,
+    author,
+    description,
+    images,
+    publishDate,
+    samplePDFs,
+    price,
+  } = req.body;
   const newBook = new Book({
-    title: req.body.title,
-    author: req.body.author,
-    description: req.body.description,
+    title,
+    author,
+    description,
+    images,
+    publishDate,
+    samplePDFs,
+    price,
   });
 
   newBook.save().then((info) => res.json(info));
@@ -44,13 +57,26 @@ router.delete("/", (req, res) => {
 // @route UPDATE /api/books/update/:id
 // @desc Update book (public)
 router.post("/update/:id", (req, res) => {
+  const {
+    title,
+    author,
+    description,
+    images,
+    publishDate,
+    samplePDFs,
+    price,
+  } = req.body;
   Book.findOneAndUpdate(
     { _id: req.params.id },
     {
       $set: {
-        title: req.body.title,
-        author: req.body.author,
-        description: req.body.description,
+        title,
+        author,
+        description,
+        images,
+        publishDate,
+        samplePDFs,
+        price,
       },
     },
     { new: true }

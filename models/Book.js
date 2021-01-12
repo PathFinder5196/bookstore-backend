@@ -12,7 +12,26 @@ const BookSchema = new Schema({
   },
   description: {
     type: String,
-    required: true,
+    required: false,
+  },
+  images: {
+    type: Array,
+    required: false,
+    default: [],
+  },
+  publishDate: {
+    type: Date,
+    required: false,
+  },
+  samplePDFs: {
+    type: Array,
+    required: false,
+    default: [],
+  },
+  price: {
+    type: Number,
+    required: false,
+    default: -1,
   },
 });
 
