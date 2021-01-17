@@ -46,9 +46,13 @@ router.post("/authenticate", function (req, res) {
           // Issue token
           const payload = { email };
           const token = jwt.sign(payload, secret, {
-            expiresIn: "1h",
+            expiresIn: 86400,
           });
-          res.cookie("token", token, { httpOnly: true }).sendStatus(200);
+          res.status(200).send({
+            id: user._id,
+            email: user.email,
+            accessToken: token,
+          });
         }
       });
     }

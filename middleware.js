@@ -1,18 +1,17 @@
 const jwt = require("jsonwebtoken");
 const secret = "mysecrettoken";
 const withAuth = function (req, res, next) {
-  const token = req.cookies.token;
+  let token = req.headers["x-access-token"];
   if (!token) {
-    res.status(401).send("Unauthorized: No token provided");
-  } else {
-    jwt.verify(token, secret, function (err, decoded) {
-      if (err) {
-        res.status(401).send("Unauthorized: Invalid token");
-      } else {
-        req.email = decoded.email;
-        next();
-      }
-    });
+    return res.status(403).send({ message: "No token provided!" });
   }
+
+  jwt.verify(token, secret, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({ message: "Unauthorized!" });
+    }
+    req.userId = decoded.id;
+    next();
+  });
 };
 module.exports = withAuth;
