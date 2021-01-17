@@ -3,6 +3,8 @@ const router = express.Router();
 
 const Book = require("../../models/Book");
 
+const withAuth = require("../../middleware");
+
 router.get("/test", (req, res) => res.json({ msg: "backend works" }));
 
 // @route GET /api/books
@@ -23,7 +25,7 @@ router.get("/:id", (req, res) => {
 
 // @route POST /api/books
 // @desc Create new book (public)
-router.post("/", (req, res) => {
+router.post("/", withAuth, (req, res) => {
   const newBook = new Book({
     title: req.body.title,
     author: req.body.author,
@@ -35,7 +37,7 @@ router.post("/", (req, res) => {
 
 // @route DELETE /api/books
 // @desc Delete book (public)
-router.delete("/", (req, res) => {
+router.delete("/", withAuth, (req, res) => {
   Book.findOneAndRemove({ _id: req.body.id }).then(() => {
     res.json({ success: true });
   });
@@ -43,7 +45,7 @@ router.delete("/", (req, res) => {
 
 // @route UPDATE /api/books/update/:id
 // @desc Update book (public)
-router.post("/update/:id", (req, res) => {
+router.post("/update/:id", withAuth, (req, res) => {
   Book.findOneAndUpdate(
     { _id: req.params.id },
     {
